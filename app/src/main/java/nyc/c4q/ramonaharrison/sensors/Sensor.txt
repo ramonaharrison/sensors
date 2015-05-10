@@ -1,0 +1,44 @@
+package nyc.c4q.ramonaharrison.sensors;
+
+import android.app.Activity;
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+
+
+public class SensorActivity extends Activity implements SensorEventListener {
+    private final SensorManager mSensorManager;
+    private final Sensor mAccelerometer;
+    Context mContext;
+
+
+    public SensorActivity(Context mContext) {
+        this.mContext = mContext;
+        mSensorManager = (SensorManager)this.mContext.getSystemService(SENSOR_SERVICE);
+        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+    }
+
+    public SensorManager getSensorManager() {
+        return this.mSensorManager;
+    }
+
+    protected void onResume() {
+        super.onResume();
+        mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    protected void onPause() {
+        super.onPause();
+        mSensorManager.unregisterListener(this);
+    }
+
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+    }
+
+    public void onSensorChanged(SensorEvent event) {
+        // displays current rotation matrix to grid
+
+    }
+}
